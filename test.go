@@ -20,10 +20,10 @@ func main() {
 
 	cmd := exec.Command(
 		"yt-dlp",
+		"--cookies", "cookies.txt",
 		"-j",
 		"--no-playlist",
-		"-f",
-		"bestaudio",
+		"-f", "bestaudio",
 		query,
 	)
 
@@ -38,7 +38,7 @@ func main() {
 	var video Video
 	err = json.Unmarshal(out, &video)
 	if err != nil {
-		fmt.Println("JSON parse error:")
+		fmt.Println("JSON parse error")
 		fmt.Println(string(out))
 		return
 	}
