@@ -2,14 +2,16 @@ FROM golang:1.21
 
 WORKDIR /app
 
-RUN apt update && apt install -y \
-    python3 \
-    python3-pip \
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    yt-dlp \
     ffmpeg \
-    curl
+    ca-certificates \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
+# Copy project files
 COPY . .
 
-RUN chmod +x start.sh
-
-CMD ["bash", "start.sh"]
+# Run test
+CMD ["go", "run", "test.go"]
