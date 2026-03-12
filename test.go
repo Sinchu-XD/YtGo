@@ -6,16 +6,12 @@ import (
 	"os/exec"
 )
 
-type Entry struct {
+type Video struct {
 	Title     string `json:"title"`
 	Duration  int    `json:"duration"`
 	Channel   string `json:"channel"`
 	ViewCount int    `json:"view_count"`
 	URL       string `json:"url"`
-}
-
-type Result struct {
-	Entries []Entry `json:"entries"`
 }
 
 func main() {
@@ -37,24 +33,17 @@ func main() {
 		return
 	}
 
-	var result Result
-	err = json.Unmarshal(out, &result)
+	var video Video
+	err = json.Unmarshal(out, &video)
 	if err != nil {
 		fmt.Println("JSON parse error:", err)
 		return
 	}
 
-	if len(result.Entries) == 0 {
-		fmt.Println("No results found")
-		return
-	}
-
-	video := result.Entries[0]
-
 	fmt.Println("========== YOUTUBE TEST ==========")
 	fmt.Println("Title:", video.Title)
 	fmt.Println("Channel:", video.Channel)
-	fmt.Println("Duration:", video.Duration, "seconds")
+	fmt.Println("Duration:", video.Duration)
 	fmt.Println("Views:", video.ViewCount)
 	fmt.Println("Stream URL:", video.URL)
 }
