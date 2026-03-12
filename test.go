@@ -27,20 +27,23 @@ func main() {
 		query,
 	)
 
-	out, err := cmd.Output()
+	out, err := cmd.CombinedOutput()
+
 	if err != nil {
-		fmt.Println("yt-dlp error:", err)
+		fmt.Println("❌ yt-dlp failed")
+		fmt.Println(string(out))
 		return
 	}
 
 	var video Video
 	err = json.Unmarshal(out, &video)
 	if err != nil {
-		fmt.Println("JSON parse error:", err)
+		fmt.Println("JSON parse error:")
+		fmt.Println(string(out))
 		return
 	}
 
-	fmt.Println("========== YOUTUBE TEST ==========")
+	fmt.Println("=========== YOUTUBE TEST ===========")
 	fmt.Println("Title:", video.Title)
 	fmt.Println("Channel:", video.Channel)
 	fmt.Println("Duration:", video.Duration)
